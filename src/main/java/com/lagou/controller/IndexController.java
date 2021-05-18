@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Calendar;
 
@@ -22,8 +23,8 @@ public class IndexController {
     private ArticleService articleService;
 
     @RequestMapping("/index")
-    public String index(Model model){
-        model.addAttribute("articleList",articleService.findAll());
+    public String index(Model model, @RequestParam(value = "pageNum", defaultValue = "0") int pageNum, @RequestParam(value = "pageSize", defaultValue = "3") int pageSize){
+        model.addAttribute("articlePage",articleService.findAll(pageNum,pageSize));
         return "client/index";
     }
 }
